@@ -43,5 +43,10 @@ Conda can be used to install `tensorflow` and `ipykernel` in your new virtual en
 
 `conda install $PACKAGE_NAME`
 
+Alternatively, the Conda environment can be cloned by running the following command, ensuring that env.yaml is present in the
+project:
+
+`conda create env -f env.yaml -n $ENVIRONMENT_NAME`
+
 
 
