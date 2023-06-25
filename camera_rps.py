@@ -13,7 +13,8 @@ class RPS:
     A class that represents an instance of the computer vision rock-paper-scissors game
     '''
     def __init__(self):
-        pass
+        self.computer_wins = 0
+        self.user_wins = 0
 
 
     def get_computer_choice(self):
@@ -55,7 +56,8 @@ class RPS:
         
         Returns
         -------
-        None
+        result : str
+            A string representing the winner - either the user or the computer, or a tie
         '''
         # check all three conditions whereby computer can win
         if (computer_choice == 'rock' and user_choice == 'scissors') or \
@@ -63,13 +65,16 @@ class RPS:
            (computer_choice == 'scissors' and user_choice == 'paper'):
             # if so, print losing message to console
             print("You lost")
+            return "computer"
         # check if user_choice and computer_choice are identical
         elif computer_choice == user_choice:
             # if so, print tie message to console
             print("It is a tie!")
+            return "tie"
         else:
             # otherwise, print winning message to console
             print("You won!")
+            return "user"
     
 
     def get_prediction(self):
@@ -145,5 +150,21 @@ class RPS:
             # change old seconds since start to new seconds since start
             old_seconds_since_start = new_seconds_since_start
     
-game = RPS()
-game.countdown()
+def play():
+    '''Plays the game by creating an instance of the RPS class'''
+    game = RPS()
+    while game.computer_wins < 3 and game.user_wins < 3:
+        result = game.get_winner(game.get_computer_choice(), game.get_user_choice())
+        print(result)
+        if result == 'computer':
+            game.computer_wins += 1
+        elif result == 'user':
+            game.user_wins += 1
+        print(game.computer_wins, game.user_wins)
+        
+    if game.computer_wins == 3:
+        print("The computer won the game")
+    else:
+        print("You won the game!")
+
+play()
