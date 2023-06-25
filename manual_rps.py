@@ -24,7 +24,35 @@ def get_user_choice():
             # otherwise, ask for input again and convert to lowercase
             user_choice = input("Sorry, that isn't a valid input. Please enter either rock, paper or scissors: ").lower()
 
-# call functions to test
-print(get_computer_choice())
-print(get_user_choice())
+def get_winner(computer_choice, user_choice):
+    '''
+    Takes two strings, compares them and evaluates who the winner is based on the rules of rock-paper-scissors.
+
+    Parameters
+    ----------
+    computer_choice : str
+        A string generated from running the function get_computer_choice
+    user_choice : str
+        A string generated from running the function get_user_choice
+    
+    Returns
+    -------
+    None
+    '''
+    # check all three conditions whereby computer can win
+    if (computer_choice == 'rock' and user_choice == 'scissors') or \
+       (computer_choice == 'paper' and user_choice == 'rock') or \
+       (computer_choice == 'scissors' and user_choice == 'paper'):
+        # if so, print losing message to console
+        print("You lost")
+    # check if user_choice and computer_choice are identical
+    elif computer_choice == user_choice:
+        # if so, print tie message to console
+        print("It is a tie!")
+    else:
+        # otherwise, print winning message to console
+        print("You won!")
+
+# call function to test
+get_winner(get_computer_choice(), get_user_choice())
 
