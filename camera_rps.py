@@ -12,6 +12,9 @@ class RPS:
     '''
     This class represents an instance of the computer vision rock-paper-scissors game.
 
+    Attributes:
+        computer_wins: integer representing the number of rounds the computer has won
+        user_wins: integer representing the number of rounds the user has won
     '''
     def __init__(self):
         self.computer_wins = 0
