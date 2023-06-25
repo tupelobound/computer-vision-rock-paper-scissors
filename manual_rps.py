@@ -8,7 +8,7 @@ def get_computer_choice():
 def get_user_choice():
     '''
     Returns user choice of either 'rock', 'paper', or 'scissors'.
-    
+
     Takes user input and checks that it is valid. Will repeatedly ask for input if user does not input 'rock', 'paper' or 'scissors'.
     Converts user input to lowercase, so capitalization is fine.
     '''
@@ -34,7 +34,7 @@ def get_winner(computer_choice, user_choice):
         A string generated from running the function get_computer_choice
     user_choice : str
         A string generated from running the function get_user_choice
-    
+        
     Returns
     -------
     None
@@ -53,6 +53,9 @@ def get_winner(computer_choice, user_choice):
         # otherwise, print winning message to console
         print("You won!")
 
-# call function to test
-get_winner(get_computer_choice(), get_user_choice())
+def play():
+    '''Runs one round of the game rock-paper-scissors.'''
+    get_winner(get_computer_choice(), get_user_choice())
 
+# run play() function to test code
+play()
