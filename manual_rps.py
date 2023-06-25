@@ -7,9 +7,10 @@ def get_computer_choice():
 
 def get_user_choice():
     '''
-    Returns user choice of either Rock, Paper, or Scissors.
+    Returns user choice of either 'rock', 'paper', or 'scissors'.
     
-    Takes user input and checks that it is valid. Will repeatedly ask for input if user does not input 'Rock', 'paper' or 'scissors'.
+    Takes user input and checks that it is valid. Will repeatedly ask for input if user does not input 'rock', 'paper' or 'scissors'.
+    Converts user input to lowercase, so capitalization is fine.
     '''
     # ask user to input their choice and convert to lowercase
     user_choice = input("Please enter your choice of rock, paper or scissors: ").lower()
