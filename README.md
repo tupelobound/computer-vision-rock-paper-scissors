@@ -1,4 +1,4 @@
-# Computer Vision RPS
+# Computer Vision Rock-Paper-Scissors
 
 This project recreates the classic game Rock-Paper-Scissors, pitting the user against the computer in a best-of-three encounter.
 The rules of the game are simple - after a countdown both players present a hand gesture representing one of either Rock, Paper
