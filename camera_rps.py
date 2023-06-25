@@ -127,8 +127,7 @@ class RPS:
 
         camera.release()
         cv2.destroyAllWindows()
-        return prediction
-        """
+        return prediction"""
 
 
     def countdown(self):
@@ -163,7 +162,7 @@ class RPS:
             print(f"Current score: Computer: {self.computer_wins} | User: {self.user_wins}\n")
         if self.computer_wins == 3:
             print("The computer won the game")
-        else:
+        elif self.user_wins == 3:
             print("You won the game!")
 
 game = RPS()
