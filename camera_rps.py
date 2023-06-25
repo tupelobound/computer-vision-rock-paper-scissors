@@ -2,6 +2,8 @@ import random # import random module to use choice() method
 from keras.models import load_model  # TensorFlow is required for Keras to work
 import cv2  # Requires opencv-python
 import numpy as np
+import time
+import math
 
 # Disable scientific notation for clarity
 np.set_printoptions(suppress=True)
@@ -71,6 +73,10 @@ class RPS:
     
 
     def get_prediction(self):
+        '''
+        Uses the camera to acquire image of user presenting gesture and then makes prediction of what the gesture is based
+        on the model trained on Teachable Machine.
+        '''
         # Load the model
         model = load_model("keras_Model.h5", compile=False)
 
@@ -117,5 +123,27 @@ class RPS:
         cv2.destroyAllWindows()
         return prediction
     
+
+    def countdown(self):
+        '''Runs a simple countdown timer.'''
+        # set start time
+        start_time = time.time()
+        # set time now
+        now = time.time()
+        # set an integer value for the seconds since start of function call
+        old_seconds_since_start = math.floor(now - start_time)
+        # run loop only while less than seven seconds have elapsed from start time
+        while now < start_time + 7:
+            # set a new value for seconds since start time
+            new_seconds_since_start = math.floor(now - start_time)
+            # check if floor integer of new seconds since start is different to floor integer value of old seconds since start
+            if old_seconds_since_start != new_seconds_since_start:
+                # if so, print value starting at 5
+                print(5 - old_seconds_since_start)
+            # update value of time now
+            now = time.time()
+            # change old seconds since start to new seconds since start
+            old_seconds_since_start = new_seconds_since_start
+    
 game = RPS()
-print(game.get_prediction())
+game.countdown()
