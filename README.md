@@ -48,5 +48,10 @@ project:
 
 `conda create env -f env.yaml -n $ENVIRONMENT_NAME`
 
+# Manual version of the game
 
+The file `manual_rps.py` contains a single-round, manual version of the game where the user can input their choice manually.
+Run this file from the terminal to play. No dependencies are required for this file to run.
+
+`python manual_rps.py`
 
