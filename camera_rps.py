@@ -155,17 +155,21 @@ class RPS:
         elif self.user_wins == 3:
             print("You won the game!")
 
-        
+    
+    def put_text_intro(self):
+        cv2.putText(self.image, "Rock, Paper, Scissors!", (100, 150), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+        cv2.putText(self.image, "Show your gesture to the webcam.", (50, 200), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+        cv2.putText(self.image, "When the countdown ends, your", (50, 250), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+        cv2.putText(self.image, "choice is captured and the round", (50, 300), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+        cv2.putText(self.image, "winner is declared in the terminal.", (50, 350), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+        cv2.putText(self.image, "Press 'c' to continue...", (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+
+
     def test(self):
         while True:
             if self.game_started == False:
                 with self.get_video():
-                    cv2.putText(self.image, "Rock, Paper, Scissors!", (100, 150), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-                    cv2.putText(self.image, "Show your gesture to the webcam.", (50, 200), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-                    cv2.putText(self.image, "When the countdown ends, your", (50, 250), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-                    cv2.putText(self.image, "choice is captured and the round", (50, 300), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-                    cv2.putText(self.image, "winner is declared in the terminal.", (50, 350), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-                    cv2.putText(self.image, "Press 'c' to continue...", (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                    self.put_text_intro()
             else:
                 with self.get_video():
                     cv2.putText(self.image, "Press 'c' to continue...", (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
@@ -195,4 +199,3 @@ class RPS:
 
 game = RPS()
 game.test()
-print(game.class_names)
