@@ -22,6 +22,10 @@ class RPS:
         self.user_wins = 0
         self.cap = cv2.VideoCapture(0)
         self.image = []
+        self.game_started = False
+        self.timer = 0
+        self.model = load_model("keras_model.h5", compile=False)
+        self.class_names = open("labels.txt", "r").readlines()
 
         
     def get_computer_choice(self):
@@ -67,6 +71,9 @@ class RPS:
             A string representing the winner - either the user or the computer, or a tie
         '''
         # check all three conditions whereby computer can win
+        print(f"You chose {user_choice}.")
+        print(f"The computer chose {computer_choice}.")
+        print("------------------------------------")
         if (computer_choice == 'rock' and user_choice == 'scissors') or \
         (computer_choice == 'paper' and user_choice == 'rock') or \
         (computer_choice == 'scissors' and user_choice == 'paper'):
@@ -98,57 +105,19 @@ class RPS:
             # Show the image in a window
             cv2.imshow("Webcam Image", self.image)
 
-    """
+    
     def get_prediction(self):
-        '''
-        Uses the camera to acquire image of user presenting gesture and then makes prediction of what the gesture is based
-        on the model trained on Teachable Machine.
-        '''
-        # Load the model
-        model = load_model("keras_Model.h5", compile=False)
-
-        # Load the labels
-        class_names = open("labels.txt", "r").readlines()
-
-        # CAMERA can be 0 or 1 based on default camera of your computer
-        camera = cv2.VideoCapture(0)
-
-        while True:
-            # Grab the webcamera's image.
-            ret, image = camera.read()
-
-            # Resize the raw image into (224-height,224-width) pixels
-            image = cv2.resize(image, (224, 224), interpolation=cv2.INTER_AREA)
-
-            # Show the image in a window
-            cv2.imshow("Webcam Image", image)
-
-            # Make the image a numpy array and reshape it to the models input shape.
-            image = np.asarray(image, dtype=np.float32).reshape(1, 224, 224, 3)
-
-            # Normalize the image array
-            image = (image / 127.5) - 1
-
-            # Predicts the model
-            prediction = model.predict(image)
-            index = np.argmax(prediction)
-            class_name = class_names[index]
-            confidence_score = prediction[0][index]
-
-            # Print prediction and confidence score
-            print("Class:", class_name[2:], end="")
-            print("Confidence Score:", str(np.round(confidence_score * 100))[:-2], "%")
-
-            # Listen to the keyboard for presses.
-            keyboard_input = cv2.waitKey(1)
-
-            # 27 is the ASCII for the esc key on your keyboard.
-            if keyboard_input == 27:
-                break
-
-        camera.release()
-        cv2.destroyAllWindows()
-        return prediction"""
+        # Resize the raw image into (224-height,224-width) pixels
+        gesture = cv2.resize(self.image, (224, 224), interpolation=cv2.INTER_AREA)
+        # Make the image a numpy array and reshape it to the models input shape.
+        gesture = np.asarray(gesture, dtype=np.float32).reshape(1, 224, 224, 3)
+        # Normalize the image array
+        gesture = (gesture / 127.5) - 1
+        # Predicts the model
+        prediction = self.model.predict(gesture)
+        index = np.argmax(prediction)
+        class_name = self.class_names[index]
+        return class_name[2:-1].lower()
 
 
     def countdown(self):
@@ -189,15 +158,35 @@ class RPS:
         
     def test(self):
         while True:
-            with self.get_video():
-                cv2.putText(self.image, "Rock, Paper, Scissors!", (100, 150), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-                cv2.putText(self.image, "Show your gesture to the webcam.", (50, 200), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-                cv2.putText(self.image, "When the countdown ends, your", (50, 250), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-                cv2.putText(self.image, "choice is captured and the round", (50, 300), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-                cv2.putText(self.image, "winner is declared in the terminal.", (50, 350), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-                cv2.putText(self.image, "Press 'c' to continue...", (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+            if self.game_started == False:
+                with self.get_video():
+                    cv2.putText(self.image, "Rock, Paper, Scissors!", (100, 150), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                    cv2.putText(self.image, "Show your gesture to the webcam.", (50, 200), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                    cv2.putText(self.image, "When the countdown ends, your", (50, 250), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                    cv2.putText(self.image, "choice is captured and the round", (50, 300), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                    cv2.putText(self.image, "winner is declared in the terminal.", (50, 350), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                    cv2.putText(self.image, "Press 'c' to continue...", (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+            else:
+                with self.get_video():
+                    cv2.putText(self.image, "Press 'c' to continue...", (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
             
-            if cv2.waitKey(1) & 0xFF == ord('q'):
+            keystroke = cv2.waitKey(1)
+            
+            if keystroke == ord('c'):
+                self.game_started = True
+                self.timer = 5
+                prev_time = time.time()
+                while self.timer > 0:
+                    curr_time = time.time()
+                    if curr_time - prev_time >= 1:
+                        prev_time = curr_time
+                        self.timer -= 1
+                    with self.get_video():
+                        cv2.putText(self.image, str(self.timer), (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                        cv2.waitKey(1)
+                with self.get_video():
+                    self.get_winner(self.get_computer_choice(), self.get_prediction())
+            elif keystroke == ord('q'):
                 break
 
         self.cap.release()
@@ -206,3 +195,4 @@ class RPS:
 
 game = RPS()
 game.test()
+print(game.class_names)
