@@ -4,6 +4,7 @@ import cv2  # Requires opencv-python
 import numpy as np
 import time
 import math
+from contextlib import contextmanager
 
 # Disable scientific notation for clarity
 np.set_printoptions(suppress=True)
@@ -19,6 +20,8 @@ class RPS:
     def __init__(self):
         self.computer_wins = 0
         self.user_wins = 0
+        self.cap = cv2.VideoCapture(0)
+        self.image = []
 
         
     def get_computer_choice(self):
@@ -79,6 +82,21 @@ class RPS:
             # otherwise, print winning message to console
             print("\nYou won this round!")
             return "user"
+
+
+    @contextmanager
+    def get_video(self):
+        # Grab the webcamera's image.
+        ret, image = self.cap.read()
+        # Flip the image along the vertical axis as most people are used to seeing mirror image
+        self.image = cv2.flip(image,1)
+        # crop image to roughly match the capture area from Teachable Machine
+        self.image = self.image[:, 300:-300]
+        try:
+            yield
+        finally:
+            # Show the image in a window
+            cv2.imshow("Webcam Image", self.image)
 
     """
     def get_prediction(self):
@@ -168,5 +186,23 @@ class RPS:
         elif self.user_wins == 3:
             print("You won the game!")
 
+        
+    def test(self):
+        while True:
+            with self.get_video():
+                cv2.putText(self.image, "Rock, Paper, Scissors!", (100, 150), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                cv2.putText(self.image, "Show your gesture to the webcam.", (50, 200), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                cv2.putText(self.image, "When the countdown ends, your", (50, 250), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                cv2.putText(self.image, "choice is captured and the round", (50, 300), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                cv2.putText(self.image, "winner is declared in the terminal.", (50, 350), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+                cv2.putText(self.image, "Press 'c' to continue...", (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+            
+            if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+
+        self.cap.release()
+        cv2.destroyAllWindows()
+    
+
 game = RPS()
-game.play()
+game.test()
