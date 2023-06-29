@@ -55,3 +55,14 @@ Run this file from the terminal to play. No dependencies are required for this f
 
 `python manual_rps.py`
 
+# Camera version of the game
+
+Running the file `camera_rps.py` from the terminal will launch a full game of the camera version of rock-paper-scissors,
+where you play against the computer. Follow the instructions on the screen to play. Pressing 'q' between rounds will end
+the game early. Before each round, press 'c' to start the countdown timer - display your gesture to the webcam and it will
+be captured when the timer reaches zero. Check the terminal for the round result and the current score - first to three rounds
+wins the game overall!
+
+`python camera_rps.py`
+
+# The machine learning model
