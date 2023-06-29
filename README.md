@@ -66,3 +66,6 @@ wins the game overall!
 `python camera_rps.py`
 
 # The machine learning model
+
+The user gesture is captured using a machine learning model. Chances are, the model that I have trained that is contained in
+this repository will not be very good at predicting another user's gestures. Therefore, I'd suggest training your own model.
