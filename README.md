@@ -67,9 +67,11 @@ wins the game overall!
 
 # The machine learning model
 
-The user gesture is captured by making a prediction of the webcam image content using a [Keras](https://keras.io/about/) machine learning model generated using the web app [Teachable Machine](https://teachablemachine.withgoogle.com).
+The user gesture is captured by making a prediction of the webcam image content using a [Keras](https://keras.io/about/)
+machine learning model generated using the web app [Teachable Machine](https://teachablemachine.withgoogle.com).
 
 Chances are, the model contained in
-this repository (trained with my gestures, face and background) will not be very good at predicting another user's gestures. Therefore, I'd suggest training your own model.
+this repository (trained with my gestures, face and background) will not be very good at predicting another user's gestures.
+Therefore, I'd suggest training your own model.
 
 To do this, visit [Teachable Machine](https://teachablemachine.withgoogle.com) and click on the 'Get Started' button.
