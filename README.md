@@ -76,7 +76,7 @@ classifying another user's gestures. Therefore, I'd suggest training your own mo
 To do this, visit [Teachable Machine](https://teachablemachine.withgoogle.com) and click on the 'Get Started' button. Then,
 choose 'Image Project' and 'Standard Image Model'. You will see the following screen:
 
-![Setting up screenshot](image_model_1.png)
+![Setting up screenshot](./images/image_model_1.png)
 
 You can edit the class names and add new classes to your project - for a model to work with the code in this project, you'll
 need four classes:
@@ -108,5 +108,21 @@ When the model is finished training, you will be able to preview the model by pr
 ![Preview screenshot 3](./images/image_model_7.png)
 ![Preview screenshot 4](./images/image_model_8.png)
 
+Finally, click on the 'Export Model' button, select the 'Tensorflow' tab and 'Keras' radio button, then click the 'Download
+my model' button to download a .zip file containing the following files:
+
+- keras_model.h5
+- labels.txt
+
+Place these files in the project root folder to use them with your copy of this project.
+
+# Thoughts and next steps
+Overall, I'm happy with the outcome of this project and what I've learned about writing functions and classes, and using the
+@contextmanager decorator.
+
+For future work, it might be nice to have the round results and final game result written to the screen instead of the terminal.
+I also think a good feature would be a check on the user input i.e. 'It looks like you chose paper - is this correct?'. And
+then if the machine learning model is having trouble correctly classifying the user gesture, giving the user the opportunity
+to input the choice manually.
 
 
