@@ -67,11 +67,46 @@ wins the game overall!
 
 # The machine learning model
 
-The user gesture is captured by making a prediction of the webcam image content using a [Keras](https://keras.io/about/)
+The user gesture is captured by making a classification of the webcam image content using a [Keras](https://keras.io/about/)
 machine learning model generated using the web app [Teachable Machine](https://teachablemachine.withgoogle.com).
 
-Chances are, the model contained in
-this repository (trained with my gestures, face and background) will not be very good at predicting another user's gestures.
-Therefore, I'd suggest training your own model.
+Chances are, the model contained in this repository (trained with my gestures, face and background) will not be very good at 
+classifying another user's gestures. Therefore, I'd suggest training your own model.
 
-To do this, visit [Teachable Machine](https://teachablemachine.withgoogle.com) and click on the 'Get Started' button.
+To do this, visit [Teachable Machine](https://teachablemachine.withgoogle.com) and click on the 'Get Started' button. Then,
+choose 'Image Project' and 'Standard Image Model'. You will see the following screen:
+
+![Setting up screenshot](image_model_1.png)
+
+You can edit the class names and add new classes to your project - for a model to work with the code in this project, you'll
+need four classes:
+- Rock
+- Paper
+- Scissors
+- Nothing
+
+Each class needs data to train from. You can either upload images or capture them directly using the webcam. To capture them
+directly, click on the 'Webcam' button, make your gesture visible in the frame, and click and hold the 'Hold to Record' button.
+Images will be captured for the entire duration you hold down the button. The more images you capture, the better the model
+should be. Try experimenting with different backgrounds, lighting conditions, changing hands etc.
+
+Once you have captured images of each of your four classes, you are ready to train the model.
+
+![Image capture screenshot](./images/image_model_2.png)
+
+Click on the 'Train Model' button to kick off the process of training the classification. The advanced dropdown button offers
+more customisation over the training paramaters should you wish. Don't switch tabs during training, as the process will pause
+and only complete once you return focus to Teachable Machine tab.
+
+![Model training screenshot 1](./images/image_model_3.png)
+![Model training screenshot 2](./images/image_model_4.png)
+
+When the model is finished training, you will be able to preview the model by presenting your gestures to the webcam.
+
+![Preview screenshot 1](./images/image_model_5.png)
+![Preview screenshot 2](./images/image_model_6.png)
+![Preview screenshot 3](./images/image_model_7.png)
+![Preview screenshot 4](./images/image_model_8.png)
+
+
+
