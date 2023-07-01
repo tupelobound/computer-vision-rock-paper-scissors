@@ -116,6 +116,8 @@ my model' button to download a .zip file containing the following files:
 
 Place these files in the project root folder to use them with your copy of this project.
 
+![Download model screenshot](./images/image_model_9.png)
+
 # Thoughts and next steps
 Overall, I'm happy with the outcome of this project and what I've learned about writing functions and classes, and using the
 @contextmanager decorator.
