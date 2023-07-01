@@ -226,5 +226,6 @@ class RPS:
         self.cap.release()
         cv2.destroyAllWindows()
 
-game = RPS()
-game.play()
+if __name__ == "__main__":
+    game = RPS()
+    game.play()
