@@ -46,7 +46,7 @@ class RPS:
         computer_choice : str
             A string generated from running the function get_computer_choice
         user_choice : str
-            A string generated from running the function get_user_choice
+            A string generated from running the function get_prediction
             
         Returns
         -------
@@ -85,14 +85,6 @@ class RPS:
 
         Uses the cv2 VideoCapture class method read() to generate an image from webcam video, then flips and crops the image.
         Utilises @contextmanager decorator to enable this function to wrap other lines of code.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        None
         '''
         # Grab the webcamera's image.
         ret, image = self.cap.read()
@@ -110,14 +102,10 @@ class RPS:
     
     def get_prediction(self):
         '''
-        Returns a prediction of user gesture in image based on machine learning model.
+        Uses a machine learning model to classify the content of the webcam image and returns that classification.
 
         Takes the class attribute image (generated from webcam), resizes it to match ML model, turns it into a numpy array
         and normalises it before predicting which gesture the user made and returning the prediction.
-
-        Parameters
-        ----------
-        None
 
         Returns
         -------
@@ -130,7 +118,7 @@ class RPS:
         gesture = np.asarray(gesture, dtype=np.float32).reshape(1, 224, 224, 3)
         # Normalise the image array
         gesture = (gesture / 127.5) - 1
-        # Predict the gesture using the model
+        # Classify the gesture using the model
         prediction = self.model.predict(gesture, verbose=0)
         # Get the index of the class with the highest prediction score
         index = np.argmax(prediction)
@@ -172,14 +160,6 @@ class RPS:
         is predicted. A random computer gesture is generated and the two are compared. A round winner is declared based on
         the rules of the game and the class attributes are updated to keep score for the game overall. Round result and 
         current game score are displayed in the terminal.
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        None
         '''
         # set the timer length
         self.timer = 5
@@ -201,7 +181,7 @@ class RPS:
                 cv2.waitKey(1) # wait for input needed to keep video open
         # once the timer reaches zero get a new video image without text
         with self.get_video():
-            # call the functions to get computer choice and prediction of user gesture, compare to find the winner
+            # call the functions to get computer choice and classification of user gesture, compare to find the winner
             # and assign to result.
             result = self.get_winner(self.get_computer_choice(), self.get_prediction())
             # update class attributes based on the result
@@ -219,14 +199,6 @@ class RPS:
 
         Loops over successive rounds of the game, calling the necessary functions until one of the players has reached
         three wins (i.e. best of five rounds).
-
-        Parameters
-        ----------
-        None
-
-        Returns
-        -------
-        None
         '''
         # set up loop that ends once either player reaches three wins
         while self.computer_wins < 3 and self.user_wins < 3:
@@ -240,7 +212,7 @@ class RPS:
                 self.game_started = True
                 # play a round
                 self.play_round()
-            # otherwise, game can be ended at any time by pressing 'q' key
+            # otherwise, game can be ended between rounds by pressing 'q' key
             elif keystroke == ord('q'):
                 break
         # check which player reached three wins first and display winner to the terminal
