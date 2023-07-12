@@ -10,6 +10,7 @@ class RPS:
     This class represents an instance of the computer vision rock-paper-scissors game.
 
     Attributes:
+    ----------
         computer_wins: integer representing the number of rounds the computer has won
         user_wins: integer representing the number of rounds the user has won
         cap: opencv VideoCapture class, used for capturing images from computer webcam
@@ -33,7 +34,6 @@ class RPS:
         
     def get_computer_choice(self):
         '''Returns a random choice as a string - either 'rock', 'paper', or 'scissors'.'''
-        # use random.choice() to randomly select and return one of the strings
         return random.choice(['rock', 'paper', 'scissors'])
 
 
@@ -53,7 +53,6 @@ class RPS:
         result : str
             A string representing the winner - either the user or the computer, or a tie
         '''
-        # print the user and computer choices to the terminal
         print(f"\nYou chose {user_choice}.")
         print(f"The computer chose {computer_choice}.")
         # check if user didn't make gesture
@@ -69,11 +68,9 @@ class RPS:
             return "computer"
         # check if user_choice and computer_choice are identical
         elif computer_choice == user_choice:
-            # if so, print tie message to console and return 'tie' as string
             print("This round was a tie!")
             return "tie"
         else:
-            # otherwise, print winning message to console and return winner as string
             print("You won this round!")
             return "user"
 
@@ -96,7 +93,6 @@ class RPS:
         try:
             yield
         finally:
-            # Show the image in a window
             cv2.imshow("Webcam Image", self.image)
 
     
@@ -143,10 +139,8 @@ class RPS:
         '''Displays either the game intro screen or the continue prompt depending on whether the game has started or not.'''
          # check if the game has started
         if self.game_started == False:
-            # if not, display the intro text to the screen
             with self.get_video():
                 self.put_text_intro()
-        # if the game has started, display the continue prompt
         else:
             with self.get_video():
                 cv2.putText(self.image, "Press 'c' to continue...", (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
@@ -161,13 +155,9 @@ class RPS:
         the rules of the game and the class attributes are updated to keep score for the game overall. Round result and 
         current game score are displayed in the terminal.
         '''
-        # set the timer length
         self.timer = 5
-        # get the time now for starting the timer
         prev_time = time.time()
-        # loop while timer is running
         while self.timer > 0:
-            # get the current time
             curr_time = time.time()
             # compare the time now to the time when the round started, if more than one second has elapsed...
             if curr_time - prev_time >= 1:
@@ -181,15 +171,11 @@ class RPS:
                 cv2.waitKey(1) # wait for input needed to keep video open
         # once the timer reaches zero get a new video image without text
         with self.get_video():
-            # call the functions to get computer choice and classification of user gesture, compare to find the winner
-            # and assign to result.
             result = self.get_winner(self.get_computer_choice(), self.get_prediction())
-            # update class attributes based on the result
             if result == 'computer':
                 self.computer_wins += 1
             elif result == 'user':
                 self.user_wins += 1
-            # print current game score to terminal
             print(f"Current score: Computer: {self.computer_wins} | User: {self.user_wins}")
 
 
@@ -202,15 +188,12 @@ class RPS:
         '''
         # set up loop that ends once either player reaches three wins
         while self.computer_wins < 3 and self.user_wins < 3:
-            # display prompt
             self.display_prompt()
             # wait for user input...
             keystroke = cv2.waitKey(1)
             # check user input - if user presses 'c'...
             if keystroke == ord('c'):
-                # start the game
                 self.game_started = True
-                # play a round
                 self.play_round()
             # otherwise, game can be ended between rounds by pressing 'q' key
             elif keystroke == ord('q'):
