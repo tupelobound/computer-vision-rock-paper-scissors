@@ -91,7 +91,7 @@ class.
 
 `class_names = open("labels.txt", "r").readlines()`
 
-`precicted_class = class_names[index]`
+`predicted_class = class_names[index]`
 
 ## Training your own model
 
