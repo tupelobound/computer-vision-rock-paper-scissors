@@ -1,9 +1,9 @@
-import random # import random module to use choice() method
+from contextlib import contextmanager
 from keras.models import load_model  # TensorFlow is required for Keras to work
 import cv2  # Requires opencv-python
 import numpy as np
+import random # import random module to use choice() method
 import time
-from contextlib import contextmanager
 
 class RPS:
     '''
@@ -31,11 +31,9 @@ class RPS:
         self.model = load_model("keras_model.h5", compile=False)
         self.class_names = open("labels.txt", "r").readlines()
 
-        
     def get_computer_choice(self):
         '''Returns a random choice as a string - either 'rock', 'paper', or 'scissors'.'''
         return random.choice(['rock', 'paper', 'scissors'])
-
 
     def get_winner(self, computer_choice, user_choice):
         '''
@@ -74,7 +72,6 @@ class RPS:
             print("You won this round!")
             return "user"
 
-
     @contextmanager
     def get_video(self):
         '''
@@ -95,7 +92,6 @@ class RPS:
         finally:
             cv2.imshow("Webcam Image", self.image)
 
-    
     def get_prediction(self):
         '''
         Uses a machine learning model to classify the content of the webcam image and returns that classification.
@@ -123,17 +119,15 @@ class RPS:
         # Return a sliced version of the string removing the class number and trailing newline, and converting to lowercase
         return class_name[2:-1].lower()
 
-
     def put_text_intro(self):
-            '''Uses cv2.putText() to place a series of messages on the screen at various positions'''
-            cv2.putText(self.image, "Rock, Paper, Scissors!", (100, 150), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-            cv2.putText(self.image, "Show your gesture to the webcam.", (50, 200), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-            cv2.putText(self.image, "When the countdown ends, your", (50, 250), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-            cv2.putText(self.image, "choice is captured and the round", (50, 300), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-            cv2.putText(self.image, "winner is declared in the terminal.", (50, 350), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-            cv2.putText(self.image, "Press 'q' between rounds to quit.", (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-            cv2.putText(self.image, "Press 'c' to continue...", (50, 450), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-
+        '''Uses cv2.putText() to place a series of messages on the screen at various positions'''
+        cv2.putText(self.image, "Rock, Paper, Scissors!", (100, 150), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+        cv2.putText(self.image, "Show your gesture to the webcam.", (50, 200), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+        cv2.putText(self.image, "When the countdown ends, your", (50, 250), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+        cv2.putText(self.image, "choice is captured and the round", (50, 300), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+        cv2.putText(self.image, "winner is declared in the terminal.", (50, 350), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+        cv2.putText(self.image, "Press 'q' between rounds to quit.", (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
+        cv2.putText(self.image, "Press 'c' to continue...", (50, 450), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
 
     def display_prompt(self):
         '''Displays either the game intro screen or the continue prompt depending on whether the game has started or not.'''
@@ -144,7 +138,6 @@ class RPS:
         else:
             with self.get_video():
                 cv2.putText(self.image, "Press 'c' to continue...", (50, 400), cv2.FONT_HERSHEY_DUPLEX, 1, (21, 35, 189), 2, cv2.LINE_AA)
-
 
     def play_round(self):
         '''
@@ -177,7 +170,6 @@ class RPS:
             elif result == 'user':
                 self.user_wins += 1
             print(f"Current score: Computer: {self.computer_wins} | User: {self.user_wins}")
-
 
     def play(self):
         '''
