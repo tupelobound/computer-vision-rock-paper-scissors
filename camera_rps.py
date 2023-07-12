@@ -84,6 +84,8 @@ class RPS:
         ret, image = self.cap.read()
         # Flip the image along the vertical axis as most people are used to seeing mirror image
         self.image = cv2.flip(image,1)
+        # crop image to roughly match the shape of the capture area from Teachable Machine
+        self.image = self.image[:, 300:-300]
         # try any code accompanying this function in with statement
         try:
             yield
