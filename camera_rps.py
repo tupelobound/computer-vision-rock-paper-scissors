@@ -77,15 +77,13 @@ class RPS:
         '''
         Shows the video image from the computer webcam.
 
-        Uses the cv2 VideoCapture class method read() to generate an image from webcam video, then flips and crops the image.
+        Uses the cv2 VideoCapture class method read() to generate an image from webcam video, then flips the image.
         Utilises @contextmanager decorator to enable this function to wrap other lines of code.
         '''
         # Grab the webcamera's image.
         ret, image = self.cap.read()
         # Flip the image along the vertical axis as most people are used to seeing mirror image
         self.image = cv2.flip(image,1)
-        # crop image to roughly match the capture area from Teachable Machine
-        self.image = self.image[:, 300:-300]
         # try any code accompanying this function in with statement
         try:
             yield
