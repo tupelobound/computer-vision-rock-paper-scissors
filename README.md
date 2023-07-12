@@ -70,6 +70,31 @@ wins the game overall!
 The user gesture is captured by making a classification of the webcam image content using a [Keras](https://keras.io/about/)
 machine learning model generated using the web app [Teachable Machine](https://teachablemachine.withgoogle.com).
 
+A previously saved Keras model, in the form of a .h5 file, can be loaded using the `load_model()` function from the `models`
+module of Keras.
+
+`from keras.models import load_model`
+
+`model = load_model("keras_model.h5", compile=False)`
+
+The `predict()` method can then be used to generate an output prediction for the input sample (in this case, a webcam image).
+
+`prediction = model.predict(image)`
+
+You can get the index of the strongest prediction:
+
+`index = np.argmax(prediction)`
+
+Teachable Machine generates a .h5 file containing the model, and a 'labels.txt' file. This can be used to generate a list of
+the model class labels. You can then use the index of the strongest prediction to obtain the string representation of that
+class.
+
+`class_names = open("labels.txt", "r").readlines()`
+
+`precicted_class = class_names[index]`
+
+## Training your own model
+
 Chances are, the model contained in this repository (trained with my gestures, face and background) will not be very good at 
 classifying another user's gestures. Therefore, I'd suggest training your own model.
 
